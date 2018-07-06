@@ -121,6 +121,8 @@ var walletDecryptDrtv        = require('./directives/walletDecryptDrtv');
 var cxWalletDecryptDrtv      = require('./directives/cxWalletDecryptDrtv');
 var fileReaderDrtv           = require('./directives/fileReaderDrtv');
 var balanceDrtv              = require('./directives/balanceDrtv');
+var placeBetCtrl             = require('./controllers/placeBetCtrl');
+
 if (IS_CX) {
   var addWalletCtrl          = require('./controllers/CX/addWalletCtrl');
   var cxDecryptWalletCtrl    = require('./controllers/CX/cxDecryptWalletCtrl');
@@ -166,6 +168,7 @@ app.controller('domainsaleCtrl', ['$scope', '$sce', 'walletService', domainsaleC
 app.controller('footerCtrl', ['$scope', 'globalService', footerCtrl]);
 app.controller('offlineTxCtrl', ['$scope', '$sce', 'walletService', offlineTxCtrl]);
 app.controller('walletBalanceCtrl', ['$scope', '$sce', '$rootScope', walletBalanceCtrl]);
+app.controller('placeBetCtrl', ['$scope', '$sce', 'walletService', placeBetCtrl]);
 app.controller('helpersCtrl', ['$scope', helpersCtrl]);
 if (IS_CX) {
   app.controller('addWalletCtrl', ['$scope', '$sce', addWalletCtrl]);
