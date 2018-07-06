@@ -432,6 +432,7 @@ NAV_Swap                        :  'Swap',
 NAV_TxStatus                    :  'TX Status',
 NAV_ViewWallet                  :  'View Wallet Info',
 NAV_YourWallets                 :  'Your Wallets',
+NAV_PlaceBet                    :  'Place Bet',
 
 NODE_CTA                        :  'Save & Use Custom Node',
 NODE_Name                       :  'Node Name',

@@ -194,9 +194,6 @@
 @@if (site === 'mew' ) { @@include( './footer-disclaimer-modal.tpl',   { "site": "mew" } ) }
 @@if (site === 'cx'  ) { @@include( './footer-disclaimer-modal.tpl',   { "site": "cx"  } ) }
 
-@@if (site === 'mew' ) { @@include( './onboardingModal.tpl',   { "site": "mew" } ) }
-@@if (site === 'cx'  ) { @@include( './onboardingModal.tpl',   { "site": "cx"  } ) }
-
 
 </main>
 </body>
