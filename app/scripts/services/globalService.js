@@ -98,6 +98,13 @@ var globalService = function($http, $httpParamSerializerJQLike) {
     url: "bulk-generate",
     mew: false,
     cx: false
+  },
+  betrPlaceBet: {
+    id: 13,
+    name: "NAV_BetrPlaceBet",
+    url: "betr-place-bet",
+    mew: true,
+    cx: false
   }
   }
 
