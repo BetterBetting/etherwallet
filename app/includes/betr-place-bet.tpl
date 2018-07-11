@@ -4,8 +4,10 @@
     ng-controller="betrPlaceBetCtrl" 
     ng-cloak>
     
+    <!--
     to:{{to}}<br/>
     data:{{data}}<br/>
+    -->
 
   <!--wallet decrypt-->
   <article class="form-group" ng-show="(!wd && visibility=='interactView')">

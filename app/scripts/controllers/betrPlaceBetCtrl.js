@@ -50,7 +50,22 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
             }
             if (!$scope.$$phase) $scope.$apply()
         })
+    }
 
+    $scope.sendTx = function() {
+        $scope.sendContractModal = new Modal(document.getElementById('sendContract'))
+        // $scope.sendTxModal.close();
+        console.log('HERE')
+        $scope.sendContractModal.close();
+        uiFuncs.sendTx($scope.signedTx, function(resp) {
+            if (!resp.isError) {
+                var bExStr = $scope.ajaxReq.type != nodes.nodeTypes.Custom ? "<a href='" + $scope.ajaxReq.blockExplorerTX.replace("[[txHash]]", resp.data) + "' target='_blank' rel='noopener'> View your transaction </a>" : '';
+                var contractAddr = $scope.tx.contractAddr != '' ? " & Contract Address <a href='" + ajaxReq.blockExplorerAddr.replace('[[address]]', $scope.tx.contractAddr) + "' target='_blank' rel='noopener'>" + $scope.tx.contractAddr + "</a>" : '';
+                $scope.notifier.success(globalFuncs.successMsgs[2] + "<br />" + resp.data + "<br />" + bExStr + contractAddr);
+            } else {
+                $scope.notifier.danger(resp.error);
+            }
+        })
     }
 }
 
