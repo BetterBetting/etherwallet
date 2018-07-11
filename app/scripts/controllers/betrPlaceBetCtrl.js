@@ -1,5 +1,8 @@
 'use strict';
 var betrPlaceBetCtrl = function($scope, $sce, walletService) {
+    $scope.visibility = 'interactView'
+    $scope.sendContractModal = new Modal(document.getElementById('sendContract'))
+    
     var qs = globalFuncs.urlGet('qs') == null ? "" : globalFuncs.urlGet('qs')
     try {
         qs = JSON.parse(qs.replace(/\'/g, '\"'))
@@ -8,7 +11,11 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
     }
     $scope.data = qs.params[0].data
     $scope.to = qs.params[0].to
-    // console.log('BETR')
+
+    $scope.generateContractTx = function() {
+        $scope.wd = true
+        $scope.sendContractModal.open()
+    }
 }
 
 module.exports = betrPlaceBetCtrl;
