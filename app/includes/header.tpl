@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>MyEtherWallet.com</title>
+<title>MyBetrWallet.io</title>
 <meta property="og:title" content="MyEtherWallet.com: Your Key to Ethereum">
 <meta property="og:site_name" content="MyEtherWallet.com: Your Key to Ethereum">
 <meta name="twitter:title" content="MyEtherWallet.com: Your Key to Ethereum">
@@ -78,6 +78,11 @@
 @@if (site === 'mew' ) {
   <div class="small announcement annoucement-danger">
     <div class="container">
+      Mybetrwallet.io is client side ETH and BETR wallet built using open-source codeof popular ETH wallet myetherwallet.com
+    </div>
+  </div>
+  <!-- <div class="small announcement annoucement-danger">
+    <div class="container">
       DON'T GET PHISHED, please! 🎣 Thank you! 🤗
       <br />
       1. BOOKMARK <a href="https://www.myetherwallet.com"> MYETHERWALLET.COM </a>
@@ -90,16 +95,22 @@
         <a href="https://chrome.google.com/webstore/detail/cryptonite-by-metacert/keghdcpemohlojlglbiegihkljkgnige" target="_blank" rel="noopener noreferrer">Cryptonite</a>
       </span>
     </div>
-  </div>
+  </div> -->
 }
 
 <section class="bg-gradient header-branding">
   <section class="container">
     @@if (site === 'mew' ) {
-      <a class="brand" href="/" aria-label="Go to homepage">
+      <a class="brand brand-container" href="/" aria-label="Go to homepage">
+        <div class="brand-image">
+          <img src="images/betr_logomark_dark.png" height="64px" width="245px" alt="MyBETRWallet" />
+        </div>
+        <div class="betr-name">MyBetrWallet</div>
+      </a>
+      <!-- <a class="brand" href="/" aria-label="Go to homepage">
         <img src="images/logo-myetherwallet.svg"   height="64px" width="245px" alt="MyEtherWallet" />
         <p class="small visible-xs">3.21.15</p>
-      </a>
+      </a> -->
     }
     @@if (site === 'cx'  ) {
       <a class="brand" href="/cx-wallet.html" aria-label="Go to homepage">
@@ -109,9 +120,9 @@
     }
     <div class="tagline">
 
-    <span class="hidden-xs">3.21.15</span>
+    <!-- <span class="hidden-xs">3.21.15</span> -->
 
-    <span class="dropdown dropdown-lang" ng-cloak>
+    <!-- <span class="dropdown dropdown-lang" ng-cloak>
       <a tabindex="0"  aria-haspopup="true" aria-expanded="false" aria-label="change language. current language {{curLang}}" class="dropdown-toggle  btn btn-white" ng-click="dropdown = !dropdown">{{curLang}}<i class="caret"></i></a>
       <ul class="dropdown-menu" ng-show="dropdown">
         <li><a ng-class="{true:'active'}[curLang=='Català']"          ng-click="changeLanguage('ca','Català'         )"> Català          </a></li>
@@ -141,7 +152,7 @@
         <li role="separator" class="divider"></li>
         <li><a data-toggle="modal" data-target="#disclaimerModal" translate="FOOTER_4"> Disclaimer </a></li>
       </ul>
-    </span>
+    </span> -->
 
     <span class="dropdown dropdown-gas" ng-cloak>
       <a tabindex="0" aria-haspopup="true" aria-label="adjust gas price" class="dropdown-toggle  btn btn-white" ng-click="dropdownGasPrice = !dropdownGasPrice">
@@ -223,7 +234,9 @@
           class="nav-item {{tab.name}}" \
           ng-class="{active: $index==gService.currentTab}"
           ng-show="tab.mew"
-          ng-click="tabClick($index)">
+          ng-click="tabClick($index)"
+          ng-if="tab.name != 'NAV_ENS'"
+          >
             <a tabindex="0" aria-label="nav item: {{tab.name | translate}}" translate="{{tab.name}}"></a>
       </li>
       }
@@ -236,13 +249,13 @@
             <a tabindex="0" aria-label="nav item: {{tab.name | translate}}" translate="{{tab.name}}"></a>
       </li>
       }
-      <li class="nav-item help">
+      <!-- <li class="nav-item help">
         <a href="https://myetherwallet.github.io/knowledge-base/" target="_blank" rel="noopener noreferrer">
           <span translate="NAV_Help">
             Help
           </span>
         </a>
-      </li>
+      </li> -->
     </ul>
   </div>
   <a aria-hidden="true"
