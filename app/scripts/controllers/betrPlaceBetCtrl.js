@@ -6,10 +6,11 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
     $scope.wallet = walletService.wallet
 
     var qs = globalFuncs.urlGet('qs') == null ? "" : globalFuncs.urlGet('qs')
+    if (!qs) return
     try {
         qs = JSON.parse(qs.replace(/\'/g, '\"'))
     } catch(e) {
-        $scope.notifier.danger(e)
+        $scope.notifier.danger(e);
     }
     
     $scope.data = qs.params[0].data
