@@ -36,20 +36,20 @@ var globalService = function($http, $httpParamSerializerJQLike) {
     mew: true,
     cx: true
   },
-  // swap: {
-  //   id: 4,
-  //   name: "NAV_Swap",
-  //   url: "swap",
-  //   mew: true,
-  //   cx: true
-  // },
-  // offlineTransaction: {
-  //   id: 5,
-  //   name: "NAV_Offline",
-  //   url:"offline-transaction",
-  //   mew: true,
-  //   cx: false
-  // },
+  swap: {
+    id: 4,
+    name: "NAV_Swap",
+    url: "swap",
+    mew: true,
+    cx: true
+  },
+  offlineTransaction: {
+    id: 5,
+    name: "NAV_Offline",
+    url:"offline-transaction",
+    mew: true,
+    cx: false
+  },
   contracts: {
     id: 6,
     name: "NAV_Contracts",
@@ -64,13 +64,13 @@ var globalService = function($http, $httpParamSerializerJQLike) {
     mew: true,
     cx: true
   },
-  // domainsale: {
-  //   id: 8,
-  //   name: "NAV_DomainSale",
-  //   url: "domainsale",
-  //   mew: true,
-  //   cx: true
-  // },
+  domainsale: {
+    id: 8,
+    name: "NAV_DomainSale",
+    url: "domainsale",
+    mew: true,
+    cx: true
+  },
   txStatus: {
     id: 9,
     name: "NAV_CheckTxStatus",
