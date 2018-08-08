@@ -10,10 +10,12 @@
     -->
 
   <!--wallet decrypt-->
-  <article class="form-group" ng-show="(!wd && visibility=='interactView')">
+  <!-- <article class="form-group" ng-show="(!wd && visibility=='interactView')"> -->
+  <article class="form-group" ng-show="(visibility=='interactView')">
       <wallet-decrypt-drtv></wallet-decrypt-drtv>
   </article>
-
+  
+  <!-- <article ng-show="visibility=='interactView'"> -->
   <article ng-show="visibility=='interactView'">
 
     @@include( '../includes/contracts-interact-modal.tpl', { "site": "mew" } )
