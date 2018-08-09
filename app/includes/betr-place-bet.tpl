@@ -10,13 +10,16 @@
     -->
 
   <!--wallet decrypt-->
-  <!-- <article class="form-group" ng-show="(!wd && visibility=='interactView')"> -->
-  <article class="form-group" ng-show="(visibility=='interactView')">
+  <article ng-show="visibility=='interactView' && !qs">
+      @@include( '../includes/betr-faq.tpl', { "site": "mew" } )
+  </article>
+
+  <article class="form-group" ng-show="visibility=='interactView' && qs">
       <wallet-decrypt-drtv></wallet-decrypt-drtv>
   </article>
   
   <!-- <article ng-show="visibility=='interactView'"> -->
-  <article ng-show="visibility=='interactView'">
+  <article ng-show="visibility=='interactView' && qs">
 
     @@include( '../includes/contracts-interact-modal.tpl', { "site": "mew" } )
 
@@ -24,7 +27,7 @@
 
     <button class="btn btn-primary btn-block"
             ng-click="generateContractTx()"
-            ng-show="!contract.functions[contract.selectedFunc.index].constant">
+            ng-show="!contract.functions[contract.selectedFunc.index].constant && qs">
       <span translate="CONTRACT_Write"> WRITE </span>
     </button>
     

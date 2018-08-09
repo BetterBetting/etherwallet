@@ -403,21 +403,24 @@ var decryptWalletCtrl = function($scope, $sce, walletService) {
         return $scope.HDWallet.dPath;
     };
     $scope.scanMetamask = function() {
-        window.web3.eth.getAccounts(function (err, accounts) {
+        window.web3.eth.getAccounts(async function (err, accounts) {
           if (err) $scope.notifier.danger(err + '. Are you sure you are on a secure (SSL / HTTPS) connection?')
           if (!accounts.length) {
             $scope.notifier.danger('Could not read your accounts from MetaMask. Try unlocking it.');
             return;
           }
           var address = accounts[0]
-          var addressBuffer = Buffer.from(address.slice(2), 'hex');
-          var wallet = new Web3Wallet(addressBuffer);
-          wallet.setBalance(false);
-          // set wallet
-          $scope.wallet = wallet
-          walletService.wallet = wallet
-          $scope.notifier.info(globalFuncs.successMsgs[6])
-          $scope.wallet.type = "default";
+          const escrowAllow = await f_getEscrowAllowed(address);
+          if (escrowAllow !== '0x') {
+            var addressBuffer = Buffer.from(address.slice(2), 'hex');
+            var wallet = new Web3Wallet(addressBuffer);
+            wallet.setBalance(false);
+            // set wallet
+            $scope.wallet = wallet
+            walletService.wallet = wallet
+            $scope.notifier.info(globalFuncs.successMsgs[6])
+            $scope.wallet.type = "default";
+          } else $scope.notifier.danger('Escrow Allow flag is not set.');
         });
     };
 
@@ -428,5 +431,68 @@ var decryptWalletCtrl = function($scope, $sce, walletService) {
         }
         return key;
     }
+
+    // escrow helper
+    async function f_getEscrowAllowed(account) {
+		const verbose = false;
+        if (verbose) {console.log("f_getEscrowAllowed called with account : " + account)};
+                
+        let mparams = "escrowAllowed(address)";
+        if (verbose) {console.log('mparams: ' + mparams)};
+
+        let mparamsHex = '0x' + ascii_to_hexa(mparams);
+        if (verbose) {console.log('mparamsHex: ' + mparamsHex)};				
+            
+        let mresult = await f_call("web3_sha3",[mparamsHex]);				
+        if (verbose) {console.log(mresult)};
+        
+        // Got back SHA3, now we need to remove anything after the first 4 bytes and append padded address parameter
+        // let mdata = mresult.substring(0,10) + normalizeArgs(account.substring(2));
+        let mdata = mresult.substring(0,10) + account.substring(2);
+        
+        // Assemble the Params object
+        let txParams = {
+            from: account,
+            to: '0xD0C27C284b660c58A14DbDb12Fd4c87C9f83EEfF',
+            data: mdata
+        }; 
+    
+        if (verbose) {console.log(txParams)}; 
+        mresult = await f_call("eth_call",[txParams,"latest"]);
+        
+        if (verbose) {console.log(mresult)};
+        if (verbose) {console.log("Address : " + account + " Escrow Allowed : " + mresult)};
+        
+        return(mresult);
+    }		
+
+    function f_call(method,params) {
+        const verbose = false;
+        if (verbose) {console.log("f_call called with method " + method + ", params : ")};
+        if (verbose) {console.log(params)};
+    
+        return new Promise(function(resolve, reject) {       
+            let mdata = JSON.stringify ({jsonrpc:'2.0',method:method, params:params,id:900});	
+            // if (verbose) {console.log(mdata)};							
+            ajaxReq.http.post('https://api.myetherwallet.com/eth', mdata).then((data, status, req) => {
+                if (verbose) {console.log(data.data)};							
+                resolve(data.data.result);
+            }
+            ).catch((xHR,status, error) => {   
+                console.log("Error with f_call");
+                reject(error);
+            });
+        });					
+    }
+
+    function ascii_to_hexa(str) {
+	var arr1 = [];
+	for (var n = 0, l = str.length; n < l; n ++) 
+     {
+		var hex = Number(str.charCodeAt(n)).toString(16);
+		arr1.push(hex);
+	 }
+	return arr1.join('');
+   }
 };
 module.exports = decryptWalletCtrl;
