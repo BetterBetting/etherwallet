@@ -1,4 +1,4 @@
-<div class="block decrypt-drtv clearfix ng-scope">
+<div class="block decrypt-drtv clearfix ng-scope betr-faq">
   <h4>
     Place BETR Bets:
   </h4>
