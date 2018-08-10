@@ -1,6 +1,8 @@
 'use strict';
 var decryptWalletCtrl = function($scope, $sce, walletService) {
+    $scope.nodeList = nodes.nodeList;
     $scope.walletType = "";
+    $scope.txId = 1;
     $scope.requireFPass = $scope.requirePPass = $scope.showFDecrypt = $scope.showPDecrypt = $scope.showAOnly = $scope.showParityDecrypt = false;
     $scope.filePassword = "";
     $scope.fileContent = "";
@@ -411,16 +413,33 @@ var decryptWalletCtrl = function($scope, $sce, walletService) {
           }
           var address = accounts[0]
           const escrowAllow = await f_getEscrowAllowed(address);
-          if (escrowAllow !== '0x') {
-            var addressBuffer = Buffer.from(address.slice(2), 'hex');
-            var wallet = new Web3Wallet(addressBuffer);
-            wallet.setBalance(false);
-            // set wallet
-            $scope.wallet = wallet
-            walletService.wallet = wallet
-            $scope.notifier.info(globalFuncs.successMsgs[6])
-            $scope.wallet.type = "default";
-          } else $scope.notifier.danger('Escrow Allow flag is not set.');
+          const escrowFlag = escrowAllow.substr(escrowAllow.length - 1);
+          console.log(escrowFlag)
+          if (escrowFlag == '0') {
+            const nonce = await f_call('eth_getTransactionCount', [address, "latest"]);
+            const to = getToForSetEscrow();
+            const setEscrowParams = [
+                {
+                    "nonce": nonce,
+                    "gasPrice": "0x4A817C800",
+                    "gas": "0x1f287",
+                    "from": address,
+                    "to": to,
+                    "value": "0x0",
+                    "data": "0xa4c6fcde0000000000000000000000000000000000000000000000000000000000000001"
+                },
+                "latest"
+            ];
+            await f_call('eth_call', setEscrowParams);
+          } 
+          var addressBuffer = Buffer.from(address.slice(2), 'hex');
+          var wallet = new Web3Wallet(addressBuffer);
+          wallet.setBalance(false);
+          // set wallet
+          $scope.wallet = wallet
+          walletService.wallet = wallet
+          $scope.notifier.info(globalFuncs.successMsgs[6])
+          $scope.wallet.type = "default";
         });
     };
 
@@ -434,7 +453,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService) {
 
     // escrow helper
     async function f_getEscrowAllowed(account) {
-		const verbose = false;
+		const verbose = true;
         if (verbose) {console.log("f_getEscrowAllowed called with account : " + account)};
                 
         let mparams = "escrowAllowed(address)";
@@ -447,8 +466,8 @@ var decryptWalletCtrl = function($scope, $sce, walletService) {
         if (verbose) {console.log(mresult)};
         
         // Got back SHA3, now we need to remove anything after the first 4 bytes and append padded address parameter
-        // let mdata = mresult.substring(0,10) + normalizeArgs(account.substring(2));
-        let mdata = mresult.substring(0,10) + account.substring(2);
+        let mdata = mresult.substring(0,10) + normalizeArgs(account.substring(2));
+        // let mdata = mresult.substring(0,10) + account.substring(2);
         
         // Assemble the Params object
         let txParams = {
@@ -464,17 +483,17 @@ var decryptWalletCtrl = function($scope, $sce, walletService) {
         if (verbose) {console.log("Address : " + account + " Escrow Allowed : " + mresult)};
         
         return(mresult);
-    }		
+    }
 
     function f_call(method,params) {
-        const verbose = false;
+        const verbose = true;
+        $scope.txId++;
         if (verbose) {console.log("f_call called with method " + method + ", params : ")};
         if (verbose) {console.log(params)};
     
-        return new Promise(function(resolve, reject) {       
-            let mdata = JSON.stringify ({jsonrpc:'2.0',method:method, params:params,id:900});	
-            // if (verbose) {console.log(mdata)};							
-            ajaxReq.http.post('https://api.myetherwallet.com/eth', mdata).then((data, status, req) => {
+        return new Promise(function(resolve, reject) {
+            let mdata = JSON.stringify ({jsonrpc:'2.0', method:method, params:params, id: $scope.txId});
+            ajaxReq.http.post(getUrl(), mdata).then((data, status, req) => {
                 if (verbose) {console.log(data.data)};							
                 resolve(data.data.result);
             }
@@ -485,14 +504,38 @@ var decryptWalletCtrl = function($scope, $sce, walletService) {
         });					
     }
 
+    // Function to pad parameters
+    function normalizeArgs(data) {
+        if(typeof data === 'number') data = parseInt(data, 16).toString();
+        while(data.length < 64) {
+            data = '0' + data;
+        }
+        return data;
+    }
+    
+    // Function to convert ASCII to Hex
     function ascii_to_hexa(str) {
-	var arr1 = [];
-	for (var n = 0, l = str.length; n < l; n ++) 
-     {
-		var hex = Number(str.charCodeAt(n)).toString(16);
-		arr1.push(hex);
-	 }
-	return arr1.join('');
-   }
+        var arr1 = [];
+        for (var n = 0, l = str.length; n < l; n ++) {
+            var hex = Number(str.charCodeAt(n)).toString(16);
+            arr1.push(hex);
+        }
+        return arr1.join('');
+    }
+
+    function getUrl() {
+        const nodeKey = JSON.parse(localStorage.getItem('curNode')).key;
+        return $scope.nodeList[nodeKey].lib.SERVERURL;
+    }
+
+    function getToForSetEscrow() {
+        const nodeKey = JSON.parse(localStorage.getItem('curNode')).key;
+        switch(nodeKey) {
+            case "rop_mew":
+                return "0xD0C27C284b660c58A14DbDb12Fd4c87C9f83EEfF";
+            default:
+                return "0x763186eB8d4856D536eD4478302971214FEbc6A9";
+        }
+    }
 };
 module.exports = decryptWalletCtrl;

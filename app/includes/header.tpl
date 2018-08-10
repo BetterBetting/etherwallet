@@ -102,12 +102,13 @@
 <section class="bg-gradient header-branding">
   <section class="container">
     @@if (site === 'mew' ) {
-      <a class="brand brand-container" href="/" aria-label="Go to homepage">
-        <div class="brand-image">
-          <img src="images/betr_logomark_dark.png" height="64px" width="245px" alt="MyBETRWallet" />
-        </div>
-        <div class="betr-name">MyBetrWallet</div>
-      </a>
+      <div class="header-aligner">
+        <a class="brand brand-container" href="/" aria-label="Go to homepage">
+          <div class="brand-image">
+            <img src="images/betr_logomark_dark.png" height="64px" width="245px" alt="MyBETRWallet" />
+          </div>
+          <div class="betr-name">MyBetrWallet</div>
+        </a>
       <!-- <a class="brand" href="/" aria-label="Go to homepage">
         <img src="images/logo-myetherwallet.svg"   height="64px" width="245px" alt="MyEtherWallet" />
         <p class="small visible-xs">3.21.15</p>
@@ -223,6 +224,7 @@
     </span>
 
     </div>
+  </div>
   </section>
 </section>
 

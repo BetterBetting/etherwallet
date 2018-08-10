@@ -28,14 +28,14 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
     }
 
     $scope.generateContractTx = function() {
-        console.log('generateContractTx');
         $scope.wd = true
         $scope.wallet = walletService.wallet
-        $scope.sendContractModal.open()
+        // $scope.sendContractModal.open()
+        $scope.tx.gasLimit = 300000
+        $scope.generateTx()
     }
 
     $scope.generateTx = function() {
-        console.log('generateTx');
         try {
             if ($scope.wallet == null) throw globalFuncs.errorMsgs[3]
         } catch (e) {
@@ -44,12 +44,13 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
         $scope.tx.contractAddr = qs.params[0].to
         $scope.tx.data = ethFuncs.sanitizeHex($scope.tx.data)
         var txData = uiFuncs.getTxData($scope)
-        console.log(txData)
+
         uiFuncs.generateTx(txData, function(rawTx) {
             if (!rawTx.isError) {
                 $scope.rawTx = rawTx.rawTx
                 $scope.signedTx = rawTx.signedTx
                 $scope.showRaw = true
+                $scope.sendTx()
             } else {
                 $scope.showRaw = false
                 $scope.notifier.danger(rawTx.error)
@@ -61,7 +62,7 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
     $scope.sendTx = function() {
         $scope.sendContractModal = new Modal(document.getElementById('sendContract'))
         // $scope.sendTxModal.close();
-        console.log('HERE')
+        // console.log('HERE')
         $scope.sendContractModal.close();
         uiFuncs.sendTx($scope.signedTx, function(resp) {
             if (!resp.isError) {
