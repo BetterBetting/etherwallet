@@ -42,7 +42,58 @@ nodes.customNodeObj = {
     'service': 'Custom',
     'lib': null
 };
-nodes.nodeList = {
+console.log(window.location)
+nodes.nodeList = window.location.origin === 'https://mybetrwallet.io' ? {
+    'eth_mew': {
+        'name': 'ETH',
+        'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
+        'blockExplorerAddr': 'https://etherscan.io/address/[[address]]',
+        'type': nodes.nodeTypes.ETH,
+        'eip155': true,
+        'chainId': 1,
+        'tokenList': require('./tokens/ethTokens.json'),
+        'abiList': require('./abiDefinitions/ethAbi.json'),
+        'service': 'myetherwallet.com',
+        'lib': new nodes.customNode('https://api.myetherwallet.com/eth', '')
+    },
+    'eth_ethscan': {
+        'name': 'ETH',
+        'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
+        'blockExplorerAddr': 'https://etherscan.io/address/[[address]]',
+        'type': nodes.nodeTypes.ETH,
+        'eip155': true,
+        'chainId': 1,
+        'tokenList': require('./tokens/ethTokens.json'),
+        'abiList': require('./abiDefinitions/ethAbi.json'),
+        'service': 'etherscan.io',
+        'lib': require('./nodeHelpers/etherscan')
+    },
+    'eth_infura': {
+        'name': 'ETH',
+        'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
+        'blockExplorerAddr': 'https://etherscan.io/address/[[address]]',
+        'type': nodes.nodeTypes.ETH,
+        'eip155': true,
+        'chainId': 1,
+        'tokenList': require('./tokens/ethTokens.json'),
+        'abiList': require('./abiDefinitions/ethAbi.json'),
+        'service': 'infura.io',
+        'lib': new nodes.infuraNode('https://mainnet.infura.io/mew')
+    },
+    'eth_giveth': {
+        'name': 'ETH',
+        'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',
+        'blockExplorerAddr': 'https://etherscan.io/address/[[address]]',
+        'type': nodes.nodeTypes.ETH,
+        'eip155': true,
+        'chainId': 1,
+        'tokenList': require('./tokens/ethTokens.json'),
+        'abiList': require('./abiDefinitions/ethAbi.json'),
+        'service': 'giveth.io',
+        'lib': new nodes.customNode('https://mew.giveth.io', '')
+    }} 
+    :
+    {
     'eth_mew': {
         'name': 'ETH',
         'blockExplorerTX': 'https://etherscan.io/tx/[[txHash]]',

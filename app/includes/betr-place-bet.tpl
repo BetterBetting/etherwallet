@@ -27,6 +27,7 @@
 
     <button class="btn btn-primary btn-block"
             ng-click="generateContractTx()"
+            ng-hide="!escrowAllow"
             ng-show="!contract.functions[contract.selectedFunc.index].constant && qs">
       <span translate="CONTRACT_Write"> WRITE </span>
     </button>

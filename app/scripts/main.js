@@ -155,7 +155,7 @@ app.controller('viewCtrl', ['$scope', 'globalService', '$sce', viewCtrl]);
 app.controller('walletGenCtrl', ['$scope', walletGenCtrl]);
 app.controller('bulkGenCtrl', ['$scope', bulkGenCtrl]);
 app.controller('onboardingCtrl', ['$scope', onboardingCtrl]);
-app.controller('decryptWalletCtrl', ['$scope', '$sce', 'walletService', decryptWalletCtrl]);
+app.controller('decryptWalletCtrl', ['$scope', '$sce', 'walletService', '$rootScope', decryptWalletCtrl]);
 app.controller('viewWalletCtrl', ['$scope', 'walletService', viewWalletCtrl]);
 app.controller('txStatusCtrl', ['$scope', txStatusCtrl]);
 app.controller('sendTxCtrl', ['$scope', '$sce', 'walletService', '$rootScope', sendTxCtrl]);
@@ -168,7 +168,7 @@ app.controller('footerCtrl', ['$scope', 'globalService', footerCtrl]);
 app.controller('offlineTxCtrl', ['$scope', '$sce', 'walletService', offlineTxCtrl]);
 app.controller('walletBalanceCtrl', ['$scope', '$sce', '$rootScope', walletBalanceCtrl]);
 app.controller('helpersCtrl', ['$scope', helpersCtrl]);
-app.controller('betrPlaceBetCtrl', ['$scope', '$sce', 'walletService', betrPlaceBetCtrl])
+app.controller('betrPlaceBetCtrl', ['$scope', '$sce', 'walletService', '$rootScope', betrPlaceBetCtrl])
 if (IS_CX) {
   app.controller('addWalletCtrl', ['$scope', '$sce', addWalletCtrl]);
   app.controller('myWalletsCtrl', ['$scope', '$sce', '$timeout', 'walletService', myWalletsCtrl]);

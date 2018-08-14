@@ -4,7 +4,7 @@
   <section class="col-md-4 col-sm-6">
 
     <h4 translate="decrypt_Access">
-      How would you like to access your wallet?
+        How would you like to access your wallet in order to place BETR bet?
     </h4>
 
     <!-- View Balance Only -->
@@ -132,32 +132,6 @@
       </a>
     </label>
 
-    <!-- Parity -->
-    <label aria-flowto="aria9"
-           class="radio"
-           style="display: none;"
-           id="showMeTheMoney">
-      <input aria-flowto="aria9"
-             aria-label="parity phrase"
-             type="radio"
-             ng-model="walletType"
-             value="parityBWallet" />
-      <span translate="x_ParityPhrase">
-        Parity Phrase
-      </span>
-    </label>
-
-    <label class="radio">
-      &nbsp;
-      <span translate="x_ParityPhrase">
-        Parity Phrase
-      </span>
-      <a href="https://myetherwallet.github.io/knowledge-base/private-keys-passwords/parity-phrases-are-no-longer-supported.html"
-         target="_blank"
-         rel="noopener noreferrer">
-           <img src="images/icon-help-2.svg" width="16px" height="16px" style="margin: 0 5px 5px">
-      </a>
-    </label>
   </section>
   <!-- / Column 1 - Select Type of Key -->
 
@@ -204,47 +178,35 @@
     <!--  MetaMask -->
     <div id="selectedTypeMetamask"
          ng-if="walletType=='metamask'">
-      <h4 translate="x_MetaMask">
-        MetaMask / Mist
+      <h4>
+        Place BETR Bet With MetaMask
       </h4>
-      <h5>
+      <!-- <h5>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 79.536 79.536"><path fill="#5dba5a" d="M39.769 0C17.8 0 0 17.8 0 39.768c0 21.965 17.8 39.768 39.769 39.768 21.965 0 39.768-17.803 39.768-39.768C79.536 17.8 61.733 0 39.769 0zm-5.627 58.513L15.397 39.768l7.498-7.498 11.247 11.247 22.497-22.493 7.498 7.498-29.995 29.991z"/></svg>
         This is a recommended way to access your wallet.
-      </h5>
+      </h5> -->
       <div class="form-group">
-        MetaMask is a browser extension that allows you to access your wallet quickly, safely &amp; easily. It is more secure because you <u>never enter your private key on a website</u>. It protects you from phishing &amp; malicious websites.
+          Please follow those steps to place a bet:
       </div>
-      <ul>
-        <li class="u__protip">
-          <a tabindex="0"
-             href="https://myetherwallet.github.io/knowledge-base/migration/moving-from-private-key-to-metamask.html"
-             target="_blank"
-             rel="noopener noreferrer">
-                How to Move to MetaMask
-          </a>
+      <ol class="metamask-betr-guide">
+        <li>
+            Login to MetaMask by clicking "Connect to MetaMask"
         </li>
-        <li class="u__download">
-          <a tabindex="0"
-             href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
-             target="_blank"
-             rel="noopener noreferrer">
-                Download MetaMask for Chrome
-          </a>
+        <li>
+            After MetaMask is connected, please click "Place BETR Bet" - BETR betting transaction is composed and you need to confirm the transaction in your MetaMask
         </li>
-        <li class="u__download">
-          <a tabindex="0"
-             href="https://metamask.io/"
-             target="_blank"
-             rel="noopener noreferrer">
-                Download MetaMask for Other Browsers
-          </a>
+        <li>
+            Please click "Confirm" in your MetaMask to confirm the betting transaction
         </li>
-      </ul>
+        <li>
+            You can see your bet under Transaction History in MetaMask
+        </li>
+      </ol>
       <div class="form-group"
            ng-hide="isSSL">
         <span class="text-danger"
               translate="ADD_Ledger_0a" >
-            Please use MyEtherWallet on a secure (SSL / HTTPS) connection to connect.
+            Please use MyBetrWallet on a secure (SSL / HTTPS) connection to connect.
         </span>
       </div>
       <div class="form-group">
@@ -722,7 +684,7 @@
 
 
     <!-- Parity Phrase -->
-    <div id="selectedTypeMnemonic" ng-if="walletType=='parityBWallet'">
+    <!-- <div id="selectedTypeMnemonic" ng-if="walletType=='parityBWallet'">
       <h4 translate="ADD_Radio_5"> Paste your mnemonic: </h4>
       <div class="form-group">
         <textarea rows="4"
@@ -745,7 +707,7 @@
              UNLOCK
          </a>
       </div>
-    </div>
+    </div> -->
     <!-- / Parity Phrase -->
 
   </section>

@@ -47,9 +47,8 @@
                How to Create a Wallet
           </a> -->
           <!-- &nbsp;&nbsp;&middot;&nbsp;&nbsp; -->
-          <a href="https://myetherwallet.github.io/knowledge-base/getting-started/getting-started-new.html"
-             target="_blank"
-             rel="noopener noreferrer"
+          <a href="/images/files/MyBetrWallet.io_-_Instructions_For_Customers.pdf"
+             download
              translate="GEN_Help_6">
                Getting Started
           </a>

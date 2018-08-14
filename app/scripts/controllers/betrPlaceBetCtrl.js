@@ -1,10 +1,15 @@
 'use strict';
-var betrPlaceBetCtrl = function($scope, $sce, walletService) {
+var betrPlaceBetCtrl = function($scope, $sce, walletService, $rootScope) {
     walletService.wallet = null
     $scope.visibility = 'interactView'
     $scope.sendContractModal = new Modal(document.getElementById('sendContract'))
     $scope.wallet = walletService.wallet
     $scope.qs = false
+    $scope.ajaxReq = ajaxReq;
+    $scope.escrowAllow = false;
+    $rootScope.$on("setEscrow", function(){
+        $scope.escrowAllow = true;
+    });
 
     var qs = globalFuncs.urlGet('qs') == null ? "" : globalFuncs.urlGet('qs')
 
@@ -44,7 +49,6 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
         $scope.tx.contractAddr = qs.params[0].to
         $scope.tx.data = ethFuncs.sanitizeHex($scope.tx.data)
         var txData = uiFuncs.getTxData($scope)
-
         uiFuncs.generateTx(txData, function(rawTx) {
             if (!rawTx.isError) {
                 $scope.rawTx = rawTx.rawTx
@@ -62,13 +66,13 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService) {
     $scope.sendTx = function() {
         $scope.sendContractModal = new Modal(document.getElementById('sendContract'))
         // $scope.sendTxModal.close();
-        // console.log('HERE')
         $scope.sendContractModal.close();
         uiFuncs.sendTx($scope.signedTx, function(resp) {
             if (!resp.isError) {
-                var bExStr = $scope.ajaxReq.type != nodes.nodeTypes.Custom ? "<a href='" + $scope.ajaxReq.blockExplorerTX.replace("[[txHash]]", resp.data) + "' target='_blank' rel='noopener'> View your transaction </a>" : '';
-                var contractAddr = $scope.tx.contractAddr != '' ? " & Contract Address <a href='" + ajaxReq.blockExplorerAddr.replace('[[address]]', $scope.tx.contractAddr) + "' target='_blank' rel='noopener'>" + $scope.tx.contractAddr + "</a>" : '';
-                $scope.notifier.success(globalFuncs.successMsgs[2] + "<br />" + resp.data + "<br />" + bExStr + contractAddr);
+                // var bExStr = $scope.ajaxReq.type != nodes.nodeTypes.Custom ? "<a href='" + $scope.ajaxReq.blockExplorerTX.replace("[[txHash]]", resp.data) + "' target='_blank' rel='noopener'> View your transaction </a>" : '';
+                // var contractAddr = $scope.tx.contractAddr != '' ? " & Contract Address <a href='" + ajaxReq.blockExplorerAddr.replace('[[address]]', $scope.tx.contractAddr) + "' target='_blank' rel='noopener'>" + $scope.tx.contractAddr + "</a>" : '';
+                // $scope.notifier.success(globalFuncs.successMsgs[2] + "<br />" + resp.data + "<br />" + bExStr + contractAddr);
+                $scope.notifier.success('Wallet Response' + '<br/>' + globalFuncs.successMsgs[7]);
             } else {
                 $scope.notifier.danger(resp.error);
             }

@@ -267,7 +267,7 @@ CX_quicksend                    :  'QuickSend', // if no appropriate translation
 CX_Tagline                      :  'Open Source JavaScript Client-Side Ether Wallet Chrome Extension',
 CX_Warning_1                    :  'Make sure you have **external backups** of any wallets you store here. Many things could happen that would cause you to lose the data in this Chrome Extension, including uninstalling and reinstalling the extension. This extension is a way to easily access your wallets, **not** a way to back them up.',
 
-decrypt_Access                  :  'How would you like to access your wallet?',
+decrypt_Access                  :  'How would you like to access your wallet in order to place BETR bet?',
 decrypt_Select                  :  'Select a Wallet',
 decrypt_Title                   :  'Select the format of your private key',
 
@@ -501,6 +501,7 @@ SUCCESS_4                       :  'Your wallet was successfully added',
 SUCCESS_5                       :  'File Selected',
 SUCCESS_6                       :  'You are successfully connected',
 SUCCESS_7                       :  'Message Signature Verified',
+SUCCESS_8                       :  'Transaction has been accepted and will be processed in due course. You can see the transaction under your Transaction History',
 
 SWAP_elapsed                    :  "Time elapsed since sent ",
 SWAP_information                :  "Your Information ",
