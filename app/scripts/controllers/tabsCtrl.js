@@ -101,14 +101,14 @@ var tabsCtrl = function($scope, globalService, $translate, $sce) {
                 $scope.notifier.info( globalFuncs.successMsgs[5] + '<br /> URL: <strong>' + globalFuncs.stripTags(window.location.href) + '</strong> <br /> Network: <strong>' + $scope.nodeType + ' </strong> provided by <strong>' + $scope.nodeService + '</strong>', 10000)
             }
         });
-        networkHasChanged && window.setTimeout(function() {
-            if (window.location.search.length > 0) {
-                window.location = window.location.href.replace(window.location.search, '');
-            } else {
-                window.location.reload();
-            }
+        // networkHasChanged && window.setTimeout(function() {
+        //     if (window.location.search.length > 0) {
+        //         window.location = window.location.href.replace(window.location.search, '');
+        //     } else {
+        //         window.location.reload();
+        //     }
 
-        }, 250)
+        // }, 250)
     }
     $scope.checkNodeUrl = function(nodeUrl) {
         return $scope.Validator.isValidURL(nodeUrl);

@@ -1,7 +1,7 @@
 'use strict';
 var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
     $scope.nodeList = nodes.nodeList;
-    $scope.walletType = "";
+    $scope.walletType = globalFuncs.localStorage.getItem('walletType') || "";
     $scope.txId = 1;
     $scope.requireFPass = $scope.requirePPass = $scope.showFDecrypt = $scope.showPDecrypt = $scope.showAOnly = $scope.showParityDecrypt = false;
     $scope.filePassword = "";
@@ -10,6 +10,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
     $scope.isSSL = window.location.protocol == 'https:';
     $scope.ajaxReq = ajaxReq;
     $scope.nodeType = $scope.ajaxReq.type;
+    $scope.address = null;
     $scope.HDWallet = {
         numWallets: 0,
         walletsPerDialog: 5,
@@ -45,6 +46,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
         $scope.setdPath();
     });
     $scope.$watch('walletType', function() {
+        globalFuncs.localStorage.setItem('walletType', $scope.walletType);
         $scope.setdPath();
     });
     $scope.setdPath = function() {
@@ -421,17 +423,21 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
           walletService.wallet = wallet
           $scope.notifier.info(globalFuncs.successMsgs[6])
           $scope.wallet.type = "default"
+          $scope.address = address
           // work with escrow
           checkAndSetEscrow(address);
         });
     };
 
+    $rootScope.$on("callSetEscrowMethod", function(){
+        f_setEscrowAllowed($scope.address)
+    });
+
     async function checkAndSetEscrow (address) {
         const escrowAllow = await f_getEscrowAllowed(address)
         const escrowFlag = escrowAllow.substr(escrowAllow.length - 1)
-        if (escrowFlag == '0') {
-          await f_setEscrowAllowed(address, true)
-        } else $rootScope.$broadcast('setEscrow')
+        if (escrowFlag == '0') $rootScope.$broadcast('showEscrowBtn')
+        else $rootScope.$broadcast('setEscrow')
     }
 
     // helper function that removes 0x prefix from strings
