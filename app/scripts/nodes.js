@@ -42,7 +42,7 @@ nodes.customNodeObj = {
     'service': 'Custom',
     'lib': null
 };
-console.log(window.location)
+
 nodes.nodeList = window.location.origin === 'https://mybetrwallet.io' ? {
     'eth_mew': {
         'name': 'ETH',

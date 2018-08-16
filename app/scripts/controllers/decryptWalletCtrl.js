@@ -47,6 +47,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
     });
     $scope.$watch('walletType', function() {
         globalFuncs.localStorage.setItem('walletType', $scope.walletType);
+        console.log('walletType set', $scope.walletType);
         $scope.setdPath();
     });
     $scope.setdPath = function() {
@@ -236,6 +237,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
         $scope.HDWallet.numWallets = start + limit;
     }
     $scope.setHDAddressesHWWallet = function(start, limit, ledger) {
+        console.log('trezor address setting started');
         $scope.HDWallet.wallets = [];
         for (var i = start; i < start + limit; i++) {
             var derivedKey = $scope.HDWallet.hdk.derive("m/" + i);
@@ -250,6 +252,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
             }
             $scope.HDWallet.wallets[$scope.HDWallet.wallets.length - 1].type = "addressOnly";
             $scope.HDWallet.wallets[$scope.HDWallet.wallets.length - 1].setBalance(false);
+            console.log('HD wallets set, addresses:', $scope.HDWallet);
         }
         $scope.HDWallet.id = 0;
         $scope.HDWallet.numWallets = start + limit;
@@ -276,7 +279,6 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
             $scope.wallet = Wallet.fromMyEtherWalletKey($scope.manualprivkey, $scope.privPassword);
             walletService.password = $scope.privPassword;
           } else if ($scope.showPDecrypt && !$scope.requirePPass) {
-              console.log(1)
             let privKey = $scope.manualprivkey.indexOf("0x") === 0 ? $scope.manualprivkey : "0x" + $scope.manualprivkey;
 
             if (!$scope.Validator.isValidHex($scope.manualprivkey)) {
@@ -300,6 +302,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
             $scope.onHDDPathChange($scope.mnemonicPassword);
           }
           walletService.wallet = $scope.wallet;
+          console.log('wallet address from wallet address string', $scope.wallet.getAddressString())
           checkAndSetEscrow($scope.wallet.getAddressString());
         } catch (e) {
           $scope.notifier.danger(globalFuncs.errorMsgs[6] + e);
@@ -330,6 +333,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
         }
     }
     $scope.HWWalletCreate = function(publicKey, chainCode, walletType, path) {
+        console.log('Trezor hw wallet creation started');
         $scope.mnemonicModel = new Modal(document.getElementById('mnemonicModel'));
         $scope.mnemonicModel.open();
         $scope.HDWallet.hdk = new hd.HDKey();
@@ -352,6 +356,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
     }
     $scope.trezorCallback = function(response) {
         if (response.success) {
+            console.log('trezor got publick key');
             $scope.HWWalletCreate(response.publicKey, response.chainCode, "trezor", $scope.getTrezorPath());
         } else {
             $scope.trezorError = true;
