@@ -437,7 +437,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
         const escrowAllow = await f_getEscrowAllowed(address)
         const escrowFlag = escrowAllow.substr(escrowAllow.length - 1)
         if (escrowFlag == '0') $rootScope.$broadcast('showEscrowBtn')
-        else $rootScope.$broadcast('setEscrow')
+        else $rootScope.$broadcast('setEscrow', false)
     }
 
     // helper function that removes 0x prefix from strings
@@ -491,7 +491,7 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
 
         uiFuncs.generateTx(txData, function(rawTx) {
             uiFuncs.sendTx(rawTx.signedTx, function(resp) {
-                $rootScope.$broadcast('setEscrow');
+                $rootScope.$broadcast('setEscrow', true);
             });
         })
     } 

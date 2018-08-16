@@ -28,7 +28,8 @@
 
     <div ng-show="showBetSuccessModal" class="block bet-success-modal">
         <div>
-            {{modalMsg}}
+            <div>{{modalHeader}}</div>
+            <div>{{modalMsg}}</div>
             <button class="btn btn-primary close-bet-modal"
                 ng-click="modalCallback()">
                 <span>Close</span>

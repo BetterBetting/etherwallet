@@ -10,13 +10,16 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService, $rootScope) {
     $scope.escrowAllow = false;
     $scope.showSetEscrowBtn = false;
     $scope.accountAddress = null;
+
     $scope.modalMsg = null;
-    $scope.showBetSuccessModal = false
+    $scope.showBetSuccessModal = false;
+    $scope.modalHeader = null;
     $scope.modalCallback = null;
-    $rootScope.$on("setEscrow", function(){
+
+    $rootScope.$on("setEscrow", function(e, shouldShowModal){
         $scope.escrowAllow = true;
         $scope.showSetEscrowBtn = false;
-        $scope.showSuccessModalEscrow();
+        if (shouldShowModal) $scope.showSuccessModalEscrow();
         $scope.$apply();
     });
     $rootScope.$on("showEscrowBtn", function(){
@@ -107,7 +110,8 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService, $rootScope) {
 
     $scope.showSuccessModalBet = function () {
         $scope.showBetSuccessModal = true;
-        $scope.modalMsg = "Transaction submitted, go to your wallet Transaction History to see Transaction confirmation";
+        $scope.modalHeader = "Transaction submitted";
+        $scope.modalMsg = "Go to your wallet Transaction History to see Transaction confirmation";
         $scope.modalCallback = function () {
             window.location = window.location.href.replace(window.location.search, '');
         }
@@ -115,6 +119,7 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService, $rootScope) {
 
     $scope.showSuccessModalEscrow = function () {
         $scope.showBetSuccessModal = true;
+        $scope.modalHeader = null;
         $scope.modalMsg = "BETR betting support is enabled for your wallet";
         $scope.modalCallback = function () {
             $scope.showBetSuccessModal = false;
