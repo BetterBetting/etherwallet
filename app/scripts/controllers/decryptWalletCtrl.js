@@ -252,8 +252,13 @@ var decryptWalletCtrl = function($scope, $sce, walletService, $rootScope) {
             }
             $scope.HDWallet.wallets[$scope.HDWallet.wallets.length - 1].type = "addressOnly";
             $scope.HDWallet.wallets[$scope.HDWallet.wallets.length - 1].setBalance(false);
-            console.log('HD wallets set, addresses:', $scope.HDWallet);
+            console.log('Last wallet, addressOnly type', $scope.HDWallet.wallets[$scope.HDWallet.wallets.length - 1]);
+            console.log('First wallet', $scope.HDWallet.wallets[0]);
         }
+        // work with escrow
+        // $scope.address = address
+        // checkAndSetEscrow(address);
+
         $scope.HDWallet.id = 0;
         $scope.HDWallet.numWallets = start + limit;
     }
