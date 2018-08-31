@@ -15,8 +15,6 @@ uiFuncs.getTxData = function($scope) {
     };
 }
 uiFuncs.isTxDataValid = function(txData) {
-    const underscoreIndex = txData.data.indexOf('_');
-    if (underscoreIndex != -1) txData.data = txData.data.substring(0, underscoreIndex);
     if (txData.to != "0xCONTRACT" && !ethFuncs.validateEtherAddress(txData.to)) throw globalFuncs.errorMsgs[5];
     else if (!globalFuncs.isNumeric(txData.value) || parseFloat(txData.value) < 0) throw globalFuncs.errorMsgs[0];
     else if (!globalFuncs.isNumeric(txData.gasLimit) || parseFloat(txData.gasLimit) <= 0) throw globalFuncs.errorMsgs[8];

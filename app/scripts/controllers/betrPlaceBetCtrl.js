@@ -38,6 +38,10 @@ var betrPlaceBetCtrl = function($scope, $sce, walletService, $rootScope) {
     }
     $scope.stake = stake
     $scope.qs = true
+
+    const underscoreIndex = qs.params[0].data.indexOf('_')
+    if (underscoreIndex != -1) qs.params[0].data = qs.params[0].data.substring(0, underscoreIndex);
+
     $scope.data = qs.params[0].data
     $scope.to = qs.params[0].to
     $scope.tx = {
